@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>图书列表</title>
+</head>
+<body>
+<table border="1"><!--指定边界线宽度为1-->
+<tr>
+    <td>图书编号</td>
+    <td>图书名字</td>
+    <td>图书作者</td>
+</tr>
+<br/>
+<tr th:each="book:${books}">
+    <td th:text="${book.id}"></td>
+    <td th:text="${book.name}"></td>
+    <td th:text="${book.author}"></td><br/>
+</tr>
+</table>
+
+</body>
+</html>
