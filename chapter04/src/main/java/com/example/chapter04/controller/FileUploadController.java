@@ -17,7 +17,7 @@ public class FileUploadController {
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
     @PostMapping("/upload")
-    public String upload(MultipartFile multipartFile, HttpServletRequest httpServletRequest){
+    public String upload(/*@RequestParam("file")*/ MultipartFile multipartFile, HttpServletRequest httpServletRequest){
         // 将上传的文件的保存路径设置为项目运行目录下的uploadFile文件夹下
         String realPath = httpServletRequest.getSession().getServletContext().getRealPath("/uploadFile/");
         System.out.println("realPath: "+realPath);
