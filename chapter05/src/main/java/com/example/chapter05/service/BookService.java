@@ -29,6 +29,10 @@ public class BookService {
         return bookDao.updateBook(book);
     }
 
+    public int insertBook(Book book){
+        return bookDao.insertBook(book);
+    }
+
     public int deleteBookById(Integer id){
         return bookDao.deleteBookById(id);
     }

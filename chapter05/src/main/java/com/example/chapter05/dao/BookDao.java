@@ -19,9 +19,10 @@ public class BookDao {
     }
 
     public int addBook(Book book){
-        return jdbcTemplate.update("insert into book(name,author) values(?,?)"
-                ,book.getName()
-                ,book.getAuthor());
+        return jdbcTemplate.update("insert into book(id,name,author) values(?,?,?)",
+                book.getId(),
+                book.getName(),
+                book.getAuthor());
     }
 
     public Book getBookById(int id){
@@ -31,10 +32,19 @@ public class BookDao {
     }
 
     public int updateBook(Book book){
+        // MySQL会正确执行id在数据库中不存在的update SQL，但是不会向表中插入数据
         return jdbcTemplate.update("update book set name=?,author=? where id=?"
                 ,book.getName()
                 ,book.getAuthor()
                 ,book.getId());
+    }
+
+    public int insertBook(Book book){
+        return jdbcTemplate.update("INSERT INTO book (id, name, author)" +
+                        "VALUES (?, ?, ?)",
+                book.getId(),
+                book.getName(),
+                book.getAuthor());
     }
 
     public int deleteBookById(Integer id){
@@ -47,6 +57,6 @@ public class BookDao {
     }
 
     public int getMaxBookId(){
-        return jdbcTemplate.getMaxRows();//jdbcTemplate.query("select MAX(?) from book");
+        return jdbcTemplate.queryForObject("select max(id) from book",Integer.class);
     }
 }
