@@ -41,17 +41,19 @@ public class BookController {
     }
 
     @GetMapping("/addBook2")
-    public void addBook2(@RequestParam("name")String name,@RequestParam("author")String author){
+    public String addBook2(@RequestParam("name")String name,@RequestParam("author")String author){
         Book book = new Book();
         int nId = bookService.getMaxBookId();
-        if(nId == 0)
-        {
+        if(nId <= 0){ // 数据库中没有数据时返回-1,保证插入时nId从1开始
             nId = 1;
+        }else{
+            nId = nId+1;
         }
         book.setId(nId);
         book.setName(name);
         book.setAuthor(author);
         bookService.addBook(book);
+        return "redirect:/books2";
     }
 
     // 前面将@RestController改成了@Controller
@@ -114,9 +116,16 @@ public class BookController {
         return model;
     }
 
+    @ResponseBody
     @GetMapping("/books2")
     public String books2(){
         List<Book> books= bookService.getAllBooks();
-        String retStr = new String();
+        //String retStr = new String();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Book book : books){
+            stringBuilder.append(book.toString());
+            stringBuilder.append("<br>");//换行
+        }
+        return stringBuilder.toString();
     }
 }
