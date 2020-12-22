@@ -71,6 +71,7 @@ public class BookController {
     @ResponseBody
     @GetMapping("/updateBook")
     public void updateBook(@RequestParam("name") String name,@RequestParam("author") String author){
+        // 如果ID在数据库中不存在 执行update语句失效
         int newId = bookService.getMaxBookId()+1;
         Book book = new Book();
         book.setId(newId);
@@ -86,25 +87,26 @@ public class BookController {
         book.setId(newId);
         book.setName(name);
         book.setAuthor(author);
-        bookService.updateBook(book);
+        bookService.insertBook(book);
         return "redirect:/books";
     }
 
     @GetMapping("/deleteBook")
-    public void deleteBookById(@RequestParam("id") int id){
+    public String deleteBookById(@RequestParam("id") int id){
         List<Book> books = bookService.getAllBooks();
-        System.out.println("Before Delete Action: ");
-        for (Book book:books) {
-            System.out.println(book.toString());
-        }
+//        System.out.println("Before Delete Action: ");
+//        for (Book book:books) {
+//            System.out.println(book.toString());
+//        }
 
         bookService.deleteBookById(id);
 
         List<Book> books2 = bookService.getAllBooks();
-        System.out.println("After Delete Action: ");
-        for (Book book:books2) {
-            System.out.println(book.toString());
-        }
+//        System.out.println("After Delete Action: ");
+//        for (Book book:books2) {
+//            System.out.println(book.toString());
+//        }
+        return "redirect:/books";
     }
 
     @GetMapping("/books")
