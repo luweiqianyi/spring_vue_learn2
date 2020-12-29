@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--配置SQL语句-->
+<mapper namespace="com.example.chaptermybatis.mapper.BookMapper">
+    <insert id="addBook" parameterType="com.example.chaptermybatis.entity.Book">
+        insert into book(name,author) values (#{name},#{author})
+    </insert>
+    <delete id="deteBookById"   parameterType="int">
+        delete from book where id=#{id}   
+    </delete>  
+    <update id="updateBookById" parameterType="com.example.chaptermybatis.entity.Book">
+        update book set name=#{name},author=#{author} where id=#{id}
+    </update>
+    <select id="getBookById" parameterType="int" resultType="com.example.chaptermybatis.entity.Book">
+        select id,name,author from book where id=#{id}
+    </select>
+    <select id="getAllBooks" resultType="com.example.chaptermybatis.entity.Book">
+        select id,nam,author from book
+    </select>
+</mapper>
